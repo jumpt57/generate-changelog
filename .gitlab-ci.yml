@@ -1,0 +1,19 @@
+stages:
+  - build
+
+changelog:
+  stage: build
+  image: alpine:latest
+  before_script:
+    - apk update && apk add git
+  script:
+    - sh ./changelog > CHANGELOG.md
+  artifacts:
+    paths:
+      - CHANGELOG.md
+    expire_in: 7 week
+    when: always
+  only:
+    - release
+    - master
+  allow_failure: true
